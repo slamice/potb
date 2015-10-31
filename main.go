@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+        "os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-gorp/gorp"
@@ -138,5 +139,8 @@ func main() {
 		})
 	})
 
-	app.Run(":5000")
+        port := os.Getenv("PORT")
+        if port == "" { port = "5000" }
+	
+        app.Run(":"+port)
 }
