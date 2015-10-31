@@ -1,0 +1,41 @@
+{
+	"ImportPath": "potb-server",
+	"GoVersion": "go1.3.3",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/gin-gonic/gin",
+			"Comment": "v1.0rc1-143-g704d690",
+			"Rev": "704d690ac0e25fcd060ff82f75f913e879e65a3c"
+		},
+		{
+			"ImportPath": "github.com/go-gorp/gorp",
+			"Comment": "v1.7-138-gc44345f",
+			"Rev": "c44345f52fc81d27c47e6b592dedaf8c28a972eb"
+		},
+		{
+			"ImportPath": "github.com/manucorporat/sse",
+			"Rev": "fe6ea2c8e398672518ef204bf0fbd9af858d0e15"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Rev": "d67e0b7d1797975196499f79bcc322c08b9f218b"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-sqlite3",
+			"Comment": "v1.1.0",
+			"Rev": "3b3f1d01b2696af5501697c35629048c227586ab"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "933937213561306ee71d265fb8a2913f20a55123"
+		},
+		{
+			"ImportPath": "gopkg.in/bluesuncorp/validator.v5",
+			"Comment": "v5.11",
+			"Rev": "98121ac23ff3d764f525d18d8de944d150e3c0fe"
+		}
+	]
+}
