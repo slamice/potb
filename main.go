@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
-        "os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-gorp/gorp"
@@ -54,8 +54,21 @@ func GetTeams() []Team {
 	return teams
 }
 
-// ClearScore clears the scores to 0
-func ClearScore() {
+// TeamGet gets all teh teams in the db
+func TeamGet(c *gin.Context) {
+	content := gin.H{}
+	for k, v := range GetTeams() {
+		content[strconv.Itoa(k)] = gin.H{
+			"Name":  v.Name,
+			"Color": v.Color,
+			"Score": v.Score,
+		}
+	}
+	c.JSON(200, content)
+}
+
+// ClearScores clears the scores to 0
+func ClearScores() {
 	_, err := dbmap.Exec("update teams set score = 0")
 	checkErr(err, "Update failed")
 }
@@ -73,7 +86,7 @@ func ScorePut(c *gin.Context) {
 
 // ScorePost clears the score
 func ScorePost(c *gin.Context) {
-	ClearScore()
+	ClearScores()
 	content := gin.H{"result": "Success"}
 	c.JSON(200, content)
 }
@@ -91,8 +104,8 @@ func initDb() *gorp.DbMap {
 	if count == 0 {
 		team := Team{
 			Created: time.Now().UnixNano(),
-			Name:    "red",
-			Color:   "rgba(223,53,53,0)",
+			Name:    "Red",
+			Color:   "#DF3535",
 			Score:   0,
 		}
 		err = dbmap.Insert(&team)
@@ -100,8 +113,8 @@ func initDb() *gorp.DbMap {
 
 		team = Team{
 			Created: time.Now().UnixNano(),
-			Name:    "white",
-			Color:   "rgba(230,231,233,0)",
+			Name:    "White",
+			Color:   "#E6E7E9",
 			Score:   0,
 		}
 		err = dbmap.Insert(&team)
@@ -119,28 +132,25 @@ func checkErr(err error, msg string) {
 
 func main() {
 	app := gin.Default()
-	app.PUT("/addscore", ScorePut)
-	app.POST("/clearscore", ScorePost)
 
-	content := gin.H{}
-	for k, v := range GetTeams() {
-		content[strconv.Itoa(k)] = gin.H{
-			"Name":  v.Name,
-			"Color": v.Color,
-			"Score": v.Score,
-		}
-	}
+	// Statics
+	app.Static("/assets", "./assets")
+
+	app.PUT("/addscore", ScorePut)
+	app.POST("/clearscores", ScorePost)
+	app.GET("/getteams", TeamGet)
 
 	app.LoadHTMLGlob("templates/*")
 	app.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"title": "Main website",
-			"teams": content,
+			"title": "Pirates of Tokyo Bay!!!",
 		})
 	})
 
-        port := os.Getenv("PORT")
-        if port == "" { port = "5000" }
-	
-        app.Run(":"+port)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5000"
+	}
+
+	app.Run(":" + port)
 }
