@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"time"
 
-	"potb-server/Godeps/_workspace/src/github.com/gin-gonic/gin"
-	"potb-server/Godeps/_workspace/src/github.com/go-gorp/gorp"
-	_ "potb-server/Godeps/_workspace/src/github.com/mattn/go-sqlite3"
+	"github.com/gin-gonic/gin"
+	"github.com/go-gorp/gorp"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 //http://phalt.co/a-simple-api-in-go/

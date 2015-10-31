@@ -12,10 +12,10 @@ import (
 	"strings"
 	"time"
 
-	"potb-server/Godeps/_workspace/src/github.com/gin-gonic/gin/binding"
-	"potb-server/Godeps/_workspace/src/github.com/gin-gonic/gin/render"
-	"potb-server/Godeps/_workspace/src/github.com/manucorporat/sse"
-	"potb-server/Godeps/_workspace/src/golang.org/x/net/context"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/gin-gonic/gin/render"
+	"github.com/manucorporat/sse"
+	"golang.org/x/net/context"
 )
 
 // Content-Type MIME of the most common data formats

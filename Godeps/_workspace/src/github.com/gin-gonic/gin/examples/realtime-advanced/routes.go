@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"potb-server/Godeps/_workspace/src/github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 )
 
 func rateLimit(c *gin.Context) {
