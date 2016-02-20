@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Pirates Of Tokyo Bay Voting</title>
+    <link rel="shortcut icon" href="/assets/images/fav_icon.png">
+    <section class="container"></section>
+
+    <link type="text/css" rel="stylesheet" href="/assets/css/jquery-ui.css">
+    <link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="/assets/css/main.css">
+  </head>
+  <body>
+
+  <h1>Programs Table</h1>
+
+  
+  <div id="performer-table" class="table-editable">
+    <span class="performer-add glyphicon glyphicon-plus"></span>
+    <table class="table">
+      <tr>
+        <th>English_Name</th>
+        <th>Japanese_Name</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <!-- This is our clonable table line -->
+      <tr class="hide">
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td>
+          <span class="performer-remove glyphicon glyphicon-remove"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br/>
+  <div id="game-table" class="table-editable">
+    <span class="game-add glyphicon glyphicon-plus"></span>
+    <table class="table">
+      <tr>
+        <th>English_name</th>
+        <th>Japanese_name</th>
+        <th>English_description</th>
+        <th>Japanese_description</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <!-- This is our clonable table line -->
+      <tr class="hide">
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td>
+          <span class="game-remove glyphicon glyphicon-remove"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br/>
+  <div id="news-table" class="table-editable">
+    <span class="news-add glyphicon glyphicon-plus"></span>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <!-- This is our clonable table line -->
+      <tr class="hide">
+        <td contenteditable="true"></td>
+        <td contenteditable="true"></td>
+        <td>
+          <span class="game-remove glyphicon glyphicon-remove"></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <button id="save-btn" class="btn btn-primary">Save</button>
+  <p id="save"></p>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+  <script src="/assets/js/json-table.js"></script>
+  <script>
+    programTable('performer-table','save-btn','addperformers','performer-add','performer-remove');
+    programTable('game-table','save-btn','addgames','game-add','game-remove');
+    programTable('news-table','save-btn','addnews','news-add','news-remove');
+  </script>
+
+  </body>
+</html>

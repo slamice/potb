@@ -1,3 +1,75 @@
 body {
   background-color: white;
 }
+
+.table-editable {
+  position: relative;
+  width:400px; 
+  
+  .glyphicon {
+    font-size: 20px;
+  }
+}
+
+.performer-remove {
+  color: #700;
+  cursor: pointer;
+  
+  &:hover {
+    color: #f00;
+  }
+}
+
+.performer-add {
+  color: #070;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 0;
+  
+  &:hover {
+    color: #0b0;
+  }
+}
+
+.game-remove {
+  color: #700;
+  cursor: pointer;
+  
+  &:hover {
+    color: #f00;
+  }
+}
+
+.game-add {
+  color: #070;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 0;
+  
+  &:hover {
+    color: #0b0;
+  }
+}
+
+.news-remove {
+  color: #700;
+  cursor: pointer;
+  
+  &:hover {
+    color: #f00;
+  }
+}
+
+.news-add {
+  color: #070;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 0;
+  
+  &:hover {
+    color: #0b0;
+  }
+}
