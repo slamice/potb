@@ -165,24 +165,14 @@ func TeamsGet(c *gin.Context) {
 // NewsGet 
 func NewsGet(c *gin.Context) {
 	content := gin.H{}
-	for k, v := range GetNews() {
-		content[strconv.Itoa(k)] = gin.H{
-			"name": v.Name,
-			"description": v.Description,
-		}
-	}
+	content["data"] = GetNews()
 	c.JSON(200, content)
 }
 
 // GamesGet 
 func GamesGet(c *gin.Context) {
 	content := gin.H{}
-	for k, v := range GetGames() {
-		content[strconv.Itoa(k)] = gin.H{
-			"english_name": v.English_name,
-			"japanese_name": v.Japanese_name,
-		}
-	}
+	content["data"] = GetGames()
 	c.JSON(200, content)
 }
 
@@ -190,12 +180,7 @@ func GamesGet(c *gin.Context) {
 // PerformersGet 
 func PerformersGet(c *gin.Context) {
 	content := gin.H{}
-	for k, v := range GetPerformers() {
-		content[strconv.Itoa(k)] = gin.H{
-			"english_name": v.English_name,
-			"japanese_name": v.Japanese_name,
-		}
-	}
+	content["data"] = GetPerformers()
 	c.JSON(200, content)
 }
 
