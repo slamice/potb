@@ -287,7 +287,7 @@ func initDb() *gorp.DbMap {
 	if count == 0 {
 		team := Team{
 			Created: time.Now().UnixNano(),
-			Name:    "Red",
+			Name:    "red",
 			Color:   "#DF3535",
 			Score:   0,
 		}
@@ -296,7 +296,7 @@ func initDb() *gorp.DbMap {
 
 		team = Team{
 			Created: time.Now().UnixNano(),
-			Name:    "White",
+			Name:    "white",
 			Color:   "#E6E7E9",
 			Score:   0,
 		}
@@ -318,7 +318,6 @@ func main() {
 
 	// Statics
 	app.Static("/assets", "./assets")
-
 
 	app.PUT("/addscore", ScorePut)
 	app.POST("/clearscores", ScorePost)
