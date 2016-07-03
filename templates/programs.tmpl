@@ -12,7 +12,52 @@
 
   <h1>Programs Table</h1>
 
-  
+  <p>
+  This is pretty rudimentary, I know. But we're starting small here.<br/>
+  How this works is you enter all the information you need, and then hit submit.<br/>
+  It will submit all info to the server and refresh, but won't show you what you submitted.<br/>
+  For that you can go to the app and check. Obviously future plans involve improving<br/>
+  this interface.<br/>
+  </p>
+
+  <h2>Program Date</h2>
+  <p>Please enter the format of the date to be: <b>YYYY-MM-DDTHH-mm-SS+09:00</b> (always tokyo time)
+  <br/>
+  This is so it's consistent with the other places we're fetching dates and 
+  can parse all required info correctly.
+  <p>
+  <br/>
+  Program Date: <input type="text" id="program-date-field"><br><br>
+
+
+  <!-- Table for Performers -->
+  <h2>Performers</h2>
+  <p>
+  Here is the existing list of performers:<br/>
+  - Ben Anderson<br/>
+  - Christiane Brew<br/>
+  - David Corbin<br/>
+  - matt danalewich<br/>
+  - Matt Danalewich<br/>
+  - trey dobson<br/>
+  - Trey Dobson<br/>
+  - Elliot Eaton<br/>
+  - Jessica Geil<br/>
+  - Masa Kawahata<br/>
+  - Sawako Kobayashi<br/>
+  - Qyoko Kudo<br/>
+  - Aya Nakamura<br/>
+  - Rodger Sonomura<br/>
+  - Mike Staffa<br/>
+  - Bob Werley<br/>
+  - Annika<br/>
+<br/>
+If a name is entered and ends with <b>a space then f<b/> (e.g. "Ms. Awesome f"),<br/>
+then a blank woman image will show, otehrwise it'll be a blank male picture.
+<br/>
+<p>
+
+  <br/>
   <div id="performer-table" class="table-editable">
     <span class="performer-add glyphicon glyphicon-plus"></span>
     <table class="table">
@@ -22,7 +67,6 @@
         <th></th>
         <th></th>
       </tr>
-      <!-- This is our clonable table line -->
       <tr class="hide">
         <td contenteditable="true"></td>
         <td contenteditable="true"></td>
@@ -33,6 +77,8 @@
     </table>
   </div>
   <br/>
+
+  <h2>Games</h2>
   <div id="game-table" class="table-editable">
     <span class="game-add glyphicon glyphicon-plus"></span>
     <table class="table">
@@ -57,6 +103,8 @@
     </table>
   </div>
   <br/>
+
+  <h2>News</h2>
   <div id="news-table" class="table-editable">
     <span class="news-add glyphicon glyphicon-plus"></span>
     <table class="table">

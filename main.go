@@ -52,7 +52,23 @@ type News struct {
 	Description    string
 }
 
+// News class
+type Program struct {
+	Created        int64
+	ProgramDate    string
+}
 
+// AddDate creates a new date for teh program
+func AddProgramDate(programDate string) Program {
+	program := Program{
+		Created: time.Now().UnixNano(),
+		ProgramDate:  programDate,
+	}
+
+	err := dbmap.Insert(&program)
+	checkErr(err, "Insert failed")
+	return program
+}
 
 // AddTeam creates a new team
 func AddTeam(name string, color string) Team {
@@ -72,6 +88,15 @@ func AddTeam(name string, color string) Team {
 func AddScore(name string) {
 	_, err := dbmap.Exec("update team set score = score + 1 where name = ?", name)
 	checkErr(err, "Update failed")
+}
+
+func AddProgram(program Program) {
+	programItem := Program{
+		Created: time.Now().UnixNano(),
+		ProgramDate:   program.ProgramDate,
+	}
+	err := dbmap.Insert(&programItem)
+	checkErr(err, "Creating new program date failed")
 }
 
 func AddNews(news []News) {
@@ -133,6 +158,14 @@ func GetPerformers() []Performer {
 	return performers
 }
 
+// GetProgram fetchs the current program date
+func GetProgram() Program {
+	var program Program
+	err := dbmap.SelectOne(&program, "select * from program limit 1")
+	checkErr(err, "Select failed")
+	return program
+}
+
 // GetGames fetches all games
 func GetGames() []Game {
 	var games []Game
@@ -159,6 +192,13 @@ func TeamsGet(c *gin.Context) {
 			"Score": v.Score,
 		}
 	}
+	c.JSON(200, content)
+}
+
+// ProgramGet 
+func ProgramGet(c *gin.Context) {
+	content := gin.H{}
+	content["data"] = GetProgram()
 	c.JSON(200, content)
 }
 
@@ -200,6 +240,11 @@ func ClearNews() {
 	deleteAllData("news")
 }
 
+// Clear Programs
+func ClearProgram() {
+	deleteAllData("program")
+}
+
 // Delete all data
 func deleteAllData(table string) {
 	_, err := dbmap.Exec("DELETE FROM " + table)
@@ -221,6 +266,19 @@ func ScorePut(c *gin.Context) {
 	var json Team
 	c.Bind(&json)
 	AddScore(json.Name)
+	content := gin.H{"result": "Success"}
+	c.JSON(200, content)
+}
+
+// ProgramPost 
+func ProgramPost(c *gin.Context) {
+	ClearProgram()
+	var program Program
+	err := c.Bind(&program)
+	if err != nil {
+        panic (err)
+    }
+	AddProgram(program)
 	content := gin.H{"result": "Success"}
 	c.JSON(200, content)
 }
@@ -251,7 +309,7 @@ func GamesPost(c *gin.Context) {
 	c.JSON(200, content)
 }
 
-// GamesPost
+// NewsPost
 func NewsPost(c *gin.Context) {
 	ClearNews()
 	var news []News
@@ -279,6 +337,7 @@ func initDb() *gorp.DbMap {
 	dbmap.AddTableWithName(Performer{}, "performer").SetKeys(true, "ID")
 	dbmap.AddTableWithName(Game{}, "game").SetKeys(true, "ID")
 	dbmap.AddTableWithName(News{}, "news").SetKeys(true, "ID")
+	dbmap.AddTableWithName(Program{}, "program")
 	err = dbmap.CreateTablesIfNotExists()
 	checkErr(err, "Create tables failed")
 
@@ -331,6 +390,9 @@ func main() {
 
 	app.POST("/addnews", NewsPost)
 	app.GET("/getnews", NewsGet)
+
+	app.POST("/addprograms", ProgramPost)
+	app.GET("/getprograms", ProgramGet)
 
 	app.LoadHTMLGlob("templates/*")
 	app.GET("/", func(c *gin.Context) {

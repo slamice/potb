@@ -23,6 +23,23 @@ function programTable(table_name, save_name, add_url, table_add, table_remove){
       var headers = [];
       var data = [];
 
+      var $programDate = document.getElementById('program-date-field').value;
+
+      if ($programDate != null) {
+          $.ajax({
+              url : "/addprograms",
+              type: "POST",
+              data: JSON.stringify({"ProgramDate": $programDate}),
+              contentType: "application/json; charset=utf-8",
+              dataType   : "json",
+              success    : function(){
+                  console.log("Pure jQuery Pure JS object");
+              }
+          });
+          var $programDate = "";
+      }
+
+
       // Get the headers (add special header logic here)
       $($rows.shift()).find('th:not(:empty)').each(function() {
         headers.push($(this).text().toLowerCase());
@@ -53,4 +70,5 @@ function programTable(table_name, save_name, add_url, table_add, table_remove){
       });
 
     });
+
 }
