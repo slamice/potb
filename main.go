@@ -100,7 +100,7 @@ func AddProgram(program Program) {
 }
 
 func AddNews(news []News) {
-	for i := range news {	
+	for i := range news {
 		newsItem := News{
 			Created: time.Now().UnixNano(),
 			Name:   news[i].Name,
@@ -114,7 +114,7 @@ func AddNews(news []News) {
 
 // AddGames
 func AddGames(games []Game) {
-	for i := range games {	
+	for i := range games {
 		game := Game{
 			Created: time.Now().UnixNano(),
 			English_name:   games[i].English_name,
@@ -128,9 +128,9 @@ func AddGames(games []Game) {
 	}
 }
 
-// AddPerformers 
+// AddPerformers
 func AddPerformers(performers []Performer) {
-	for i := range performers {	
+	for i := range performers {
 		perf := Performer{
 			Created: time.Now().UnixNano(),
 			English_name:   performers[i].English_name,
@@ -195,21 +195,21 @@ func TeamsGet(c *gin.Context) {
 	c.JSON(200, content)
 }
 
-// ProgramGet 
+// ProgramGet
 func ProgramGet(c *gin.Context) {
 	content := gin.H{}
 	content["data"] = GetProgram()
 	c.JSON(200, content)
 }
 
-// NewsGet 
+// NewsGet
 func NewsGet(c *gin.Context) {
 	content := gin.H{}
 	content["data"] = GetNews()
 	c.JSON(200, content)
 }
 
-// GamesGet 
+// GamesGet
 func GamesGet(c *gin.Context) {
 	content := gin.H{}
 	content["data"] = GetGames()
@@ -217,7 +217,7 @@ func GamesGet(c *gin.Context) {
 }
 
 
-// PerformersGet 
+// PerformersGet
 func PerformersGet(c *gin.Context) {
 	content := gin.H{}
 	content["data"] = GetPerformers()
@@ -270,7 +270,7 @@ func ScorePut(c *gin.Context) {
 	c.JSON(200, content)
 }
 
-// ProgramPost 
+// ProgramPost
 func ProgramPost(c *gin.Context) {
 	ClearProgram()
 	var program Program
@@ -283,7 +283,7 @@ func ProgramPost(c *gin.Context) {
 	c.JSON(200, content)
 }
 
-// PerformersPost 
+// PerformersPost
 func PerformersPost(c *gin.Context) {
 	ClearPerformers()
 	var performers []Performer
@@ -391,8 +391,8 @@ func main() {
 	app.POST("/addnews", NewsPost)
 	app.GET("/getnews", NewsGet)
 
-	app.POST("/addprograms", ProgramPost)
-	app.GET("/getprograms", ProgramGet)
+	app.POST("/addprogramdate", ProgramPost)
+	app.GET("/getprogramdate", ProgramGet)
 
 	app.LoadHTMLGlob("templates/*")
 	app.GET("/", func(c *gin.Context) {
