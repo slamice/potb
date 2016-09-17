@@ -27,7 +27,7 @@ function programTable(table_name, save_name, add_url, table_add, table_remove){
 
       if ($programDate != null) {
           $.ajax({
-              url : "/addprograms",
+              url : "/addprogramdate",
               type: "POST",
               data: JSON.stringify({"ProgramDate": $programDate}),
               contentType: "application/json; charset=utf-8",
