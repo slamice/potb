@@ -87,7 +87,7 @@ func AddTeam(name string, color string) Team {
 
 // AddScore adds the score by 1
 func AddScore(name string) {
-	_, err := dbmap.Exec("update team set score = score + 1 where name = ?", name)
+	_, err := dbmap.Exec("update team set score = score + 1 where name = $1", name)
 	checkErr(err, "Update failed")
 }
 
