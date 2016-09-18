@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -10,7 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-gorp/gorp"
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/lib/pq"
 )
 
 //http://phalt.co/a-simple-api-in-go/
@@ -28,41 +29,41 @@ type Team struct {
 
 // Performers class
 type Performer struct {
-	ID      int64 `db:"performer_id"`
-	Created int64
-	English_name    string `json:"english_name" form:"english_name" binding:"required"`
-	Japanese_name   string `json:"japanese_name" form:"japanese_name" binding:"required"`
+	ID            int64 `db:"performer_id"`
+	Created       int64
+	English_name  string `json:"english_name" form:"english_name" binding:"required"`
+	Japanese_name string `json:"japanese_name" form:"japanese_name" binding:"required"`
 }
 
 // Game class
 type Game struct {
-	ID      int64 `db:"game_id"`
-	Created int64
-	English_name    string
-	Japanese_name   string
-	English_description    string
-	Japanese_description   string
+	ID                   int64 `db:"game_id"`
+	Created              int64
+	English_name         string
+	Japanese_name        string
+	English_description  string
+	Japanese_description string
 }
 
 // News class
 type News struct {
-	ID      int64 `db:"news_id"`
-	Created int64
-	Name string
-	Description    string
+	ID          int64 `db:"news_id"`
+	Created     int64
+	Name        string
+	Description string
 }
 
 // News class
 type Program struct {
-	Created        int64
-	ProgramDate    string
+	Created     int64
+	ProgramDate string
 }
 
 // AddDate creates a new date for teh program
 func AddProgramDate(programDate string) Program {
 	program := Program{
-		Created: time.Now().UnixNano(),
-		ProgramDate:  programDate,
+		Created:     time.Now().UnixNano(),
+		ProgramDate: programDate,
 	}
 
 	err := dbmap.Insert(&program)
@@ -92,8 +93,8 @@ func AddScore(name string) {
 
 func AddProgram(program Program) {
 	programItem := Program{
-		Created: time.Now().UnixNano(),
-		ProgramDate:   program.ProgramDate,
+		Created:     time.Now().UnixNano(),
+		ProgramDate: program.ProgramDate,
 	}
 	err := dbmap.Insert(&programItem)
 	checkErr(err, "Creating new program date failed")
@@ -102,9 +103,9 @@ func AddProgram(program Program) {
 func AddNews(news []News) {
 	for i := range news {
 		newsItem := News{
-			Created: time.Now().UnixNano(),
-			Name:   news[i].Name,
-			Description:  news[i].Description,
+			Created:     time.Now().UnixNano(),
+			Name:        news[i].Name,
+			Description: news[i].Description,
 		}
 
 		err := dbmap.Insert(&newsItem)
@@ -116,11 +117,11 @@ func AddNews(news []News) {
 func AddGames(games []Game) {
 	for i := range games {
 		game := Game{
-			Created: time.Now().UnixNano(),
-			English_name:   games[i].English_name,
-			Japanese_name:  games[i].Japanese_name,
-			English_description:    games[i].English_description,
-			Japanese_description:   games[i].Japanese_description,
+			Created:              time.Now().UnixNano(),
+			English_name:         games[i].English_name,
+			Japanese_name:        games[i].Japanese_name,
+			English_description:  games[i].English_description,
+			Japanese_description: games[i].Japanese_description,
 		}
 
 		err := dbmap.Insert(&game)
@@ -132,9 +133,9 @@ func AddGames(games []Game) {
 func AddPerformers(performers []Performer) {
 	for i := range performers {
 		perf := Performer{
-			Created: time.Now().UnixNano(),
-			English_name:   performers[i].English_name,
-			Japanese_name:  performers[i].Japanese_name,
+			Created:       time.Now().UnixNano(),
+			English_name:  performers[i].English_name,
+			Japanese_name: performers[i].Japanese_name,
 		}
 
 		err := dbmap.Insert(&perf)
@@ -216,14 +217,12 @@ func GamesGet(c *gin.Context) {
 	c.JSON(200, content)
 }
 
-
 // PerformersGet
 func PerformersGet(c *gin.Context) {
 	content := gin.H{}
 	content["data"] = GetPerformers()
 	c.JSON(200, content)
 }
-
 
 // ClearPerformers clears the performers to 0
 func ClearPerformers() {
@@ -251,8 +250,6 @@ func deleteAllData(table string) {
 	checkErr(err, "Clear table failed")
 }
 
-
-
 // ClearScores clears the scores to 0
 func ClearScores() {
 	_, err := dbmap.Exec("update team set score = 0")
@@ -276,8 +273,8 @@ func ProgramPost(c *gin.Context) {
 	var program Program
 	err := c.Bind(&program)
 	if err != nil {
-        panic (err)
-    }
+		panic(err)
+	}
 	AddProgram(program)
 	content := gin.H{"result": "Success"}
 	c.JSON(200, content)
@@ -289,8 +286,8 @@ func PerformersPost(c *gin.Context) {
 	var performers []Performer
 	err := c.Bind(&performers)
 	if err != nil {
-        panic (err)
-    }
+		panic(err)
+	}
 	AddPerformers(performers)
 	content := gin.H{"result": "Success"}
 	c.JSON(200, content)
@@ -302,8 +299,8 @@ func GamesPost(c *gin.Context) {
 	var games []Game
 	err := c.Bind(&games)
 	if err != nil {
-        panic (err)
-    }
+		panic(err)
+	}
 	AddGames(games)
 	content := gin.H{"result": "Success"}
 	c.JSON(200, content)
@@ -315,8 +312,8 @@ func NewsPost(c *gin.Context) {
 	var news []News
 	err := c.Bind(&news)
 	if err != nil {
-        panic (err)
-    }
+		panic(err)
+	}
 	AddNews(news)
 	content := gin.H{"result": "Success"}
 	c.JSON(200, content)
@@ -330,9 +327,16 @@ func ScorePost(c *gin.Context) {
 }
 
 func initDb() *gorp.DbMap {
-	db, err := sql.Open("sqlite3", "db.sqlite3")
+
+	username := os.Getenv("PIRATES_DB_USERNAME")
+	password := os.Getenv("PIRATES_DB_PASSWORD")
+	host := os.Getenv("PIRATES_DB_HOST")
+	dbName := os.Getenv("PIRATES_DB")
+
+	connection_str := fmt.Sprintf("postgres://%s:%s@%s:5432/%s?sslmode=disable", username, password, host, dbName)
+	db, err := sql.Open("postgres", connection_str)
 	checkErr(err, "sql.Open failed")
-	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
+	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
 	dbmap.AddTableWithName(Team{}, "team").SetKeys(true, "ID")
 	dbmap.AddTableWithName(Performer{}, "performer").SetKeys(true, "ID")
 	dbmap.AddTableWithName(Game{}, "game").SetKeys(true, "ID")
