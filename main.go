@@ -9,9 +9,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gin-gonic/gin"
-	"github.com/go-gorp/gorp"
-	_ "github.com/lib/pq"
+	"potb-server/Godeps/_workspace/src/github.com/gin-gonic/gin"
+	"potb-server/Godeps/_workspace/src/github.com/go-gorp/gorp"
+	_ "potb-server/Godeps/_workspace/src/github.com/lib/pq"
 )
 
 //http://phalt.co/a-simple-api-in-go/

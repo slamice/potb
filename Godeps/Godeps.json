@@ -13,17 +13,17 @@
 			"Rev": "c44345f52fc81d27c47e6b592dedaf8c28a972eb"
 		},
 		{
+			"ImportPath": "github.com/lib/pq",
+			"Comment": "go1.0-cutoff-117-g50761b0",
+			"Rev": "50761b0867bd1d9d069276790bcd4a3bccf2324a"
+		},
+		{
 			"ImportPath": "github.com/manucorporat/sse",
 			"Rev": "fe6ea2c8e398672518ef204bf0fbd9af858d0e15"
 		},
 		{
 			"ImportPath": "github.com/mattn/go-colorable",
 			"Rev": "d67e0b7d1797975196499f79bcc322c08b9f218b"
-		},
-		{
-			"ImportPath": "github.com/mattn/go-sqlite3",
-			"Comment": "v1.1.0",
-			"Rev": "3b3f1d01b2696af5501697c35629048c227586ab"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",

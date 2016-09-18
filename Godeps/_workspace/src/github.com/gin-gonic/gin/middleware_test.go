@@ -9,8 +9,8 @@ import (
 
 	"testing"
 
-	"github.com/manucorporat/sse"
 	"github.com/stretchr/testify/assert"
+	"potb-server/Godeps/_workspace/src/github.com/manucorporat/sse"
 )
 
 func TestMiddlewareGeneralCase(t *testing.T) {
