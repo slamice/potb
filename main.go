@@ -377,34 +377,34 @@ func checkErr(err error, msg string) {
 }
 
 func main() {
-	app := gin.Default()
+	router := gin.Default()
 
 	// Statics
-	app.Static("/assets", "./assets")
+	router.Static("/assets", "./assets")
 
-	app.PUT("/addscore", ScorePut)
-	app.POST("/clearscores", ScorePost)
-	app.GET("/getteams", TeamsGet)
+	router.PUT("/addscore", ScorePut)
+	router.POST("/clearscores", ScorePost)
+	router.GET("/getteams", TeamsGet)
 
-	app.POST("/addperformers", PerformersPost)
-	app.GET("/getperformers", PerformersGet)
+	router.POST("/addperformers", PerformersPost)
+	router.GET("/getperformers", PerformersGet)
 
-	app.POST("/addgames", GamesPost)
-	app.GET("/getgames", GamesGet)
+	router.POST("/addgames", GamesPost)
+	router.GET("/getgames", GamesGet)
 
-	app.POST("/addnews", NewsPost)
-	app.GET("/getnews", NewsGet)
+	router.POST("/addnews", NewsPost)
+	router.GET("/getnews", NewsGet)
 
-	app.POST("/addprogramdate", ProgramPost)
-	app.GET("/getprogramdate", ProgramGet)
+	router.POST("/addprogramdate", ProgramPost)
+	router.GET("/getprogramdate", ProgramGet)
 
-	app.LoadHTMLGlob("templates/*")
-	app.GET("/", func(c *gin.Context) {
+	router.LoadHTMLGlob("templates/*")
+	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
 			"title": "Pirates of Tokyo Bay!!!",
 		})
 	})
-	app.GET("/programs", func(c *gin.Context) {
+	router.GET("/programs", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "programs.tmpl", gin.H{
 			"title": "Programs!!!",
 		})
@@ -412,8 +412,19 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "5000"
+		port = ":5000"
 	}
 
-	app.Run(":" + port)
+    s := &http.Server{
+        Addr:           port,
+        Handler:        router,
+        ReadTimeout:    30 * time.Second,
+        WriteTimeout:   30 * time.Second,
+        MaxHeaderBytes: 1 << 20,
+    }
+    
+	if err := s.ListenAndServe(); err != nil {
+	    log.Fatal("ListenAndServe: ", err)
+	}
+
 }
