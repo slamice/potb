@@ -412,7 +412,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = ":5000"
+		port = ":8000"
 	}
 
     s := &http.Server{
