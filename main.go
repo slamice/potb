@@ -366,7 +366,7 @@ func initDb() *gorp.DbMap {
 	if count == 0 {
 		program := Program{
 			Created: 	 time.Now().UnixNano(),
-			ProgramDate: "2016-01-01T01-01-00+09:00Z",
+			ProgramDate: "2016-01-01T01:01:00+09:00Z",
 		}
 		err = dbmap.Insert(&program)
 		checkErr(err, "Init insert failed for Program Date")
