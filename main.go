@@ -67,7 +67,7 @@ func AddProgramDate(programDate string) Program {
 	}
 
 	err := dbmap.Insert(&program)
-	checkErr(err, "Insert failed")
+	checkErr(err, "Insert failed for adding a new program date")
 	return program
 }
 
@@ -81,14 +81,14 @@ func AddTeam(name string, color string) Team {
 	}
 
 	err := dbmap.Insert(&team)
-	checkErr(err, "Insert failed")
+	checkErr(err, "Insert failed for Team")
 	return team
 }
 
 // AddScore adds the score by 1
 func AddScore(name string) {
 	_, err := dbmap.Exec("update team set score = score + 1 where name = $1", name)
-	checkErr(err, "Update failed")
+	checkErr(err, "Update failed for updating a team score")
 }
 
 func AddProgram(program Program) {
@@ -147,7 +147,7 @@ func AddPerformers(performers []Performer) {
 func GetTeams() []Team {
 	var teams []Team
 	_, err := dbmap.Select(&teams, "select * from team order by score")
-	checkErr(err, "Select failed")
+	checkErr(err, "Team select failed")
 	return teams
 }
 
@@ -155,7 +155,7 @@ func GetTeams() []Team {
 func GetPerformers() []Performer {
 	var performers []Performer
 	_, err := dbmap.Select(&performers, "select * from performer")
-	checkErr(err, "Select failed")
+	checkErr(err, "Performer select failed")
 	return performers
 }
 
@@ -163,7 +163,7 @@ func GetPerformers() []Performer {
 func GetProgram() Program {
 	var program Program
 	err := dbmap.SelectOne(&program, "select * from program limit 1")
-	checkErr(err, "Select failed")
+	checkErr(err, "Program Date select failed")
 	return program
 }
 
@@ -171,7 +171,7 @@ func GetProgram() Program {
 func GetGames() []Game {
 	var games []Game
 	_, err := dbmap.Select(&games, "select * from game")
-	checkErr(err, "Select failed")
+	checkErr(err, "Game select failed")
 	return games
 }
 
@@ -179,7 +179,7 @@ func GetGames() []Game {
 func GetNews() []News {
 	var news []News
 	_, err := dbmap.Select(&news, "select * from news")
-	checkErr(err, "Select failed")
+	checkErr(err, "News select failed")
 	return news
 }
 
@@ -247,13 +247,13 @@ func ClearProgram() {
 // Delete all data
 func deleteAllData(table string) {
 	_, err := dbmap.Exec("DELETE FROM " + table)
-	checkErr(err, "Clear table failed")
+	checkErr(err, fmt.Sprintf("Clear table failed for table %s", table))
 }
 
 // ClearScores clears the scores to 0
 func ClearScores() {
 	_, err := dbmap.Exec("update team set score = 0")
-	checkErr(err, "Update failed")
+	checkErr(err, "Update failed for scores")
 }
 
 // TODO score clear
