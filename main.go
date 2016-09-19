@@ -410,8 +410,13 @@ func main() {
 		})
 	})
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5000"
+	}
+
     s := &http.Server{
-        Addr:           ":5000",
+        Addr:           ":" + port,
         Handler:        router,
         ReadTimeout:    30 * time.Second,
         WriteTimeout:   30 * time.Second,
