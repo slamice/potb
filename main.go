@@ -61,13 +61,20 @@ type Program struct {
 
 // AddDate creates a new date for teh program
 func AddProgramDate(programDate string) Program {
+	count, err := dbmap.SelectInt("select count(*) from program")
+	checkErr(err, "Select before adding a program failed.")
+	if count > 0 {
+		ClearProgram()
+	}
+
 	program := Program{
 		Created:     time.Now().UnixNano(),
 		ProgramDate: programDate,
 	}
 
-	err := dbmap.Insert(&program)
+	err = dbmap.Insert(&program)
 	checkErr(err, "Insert failed for adding a new program date")
+
 	return program
 }
 
@@ -345,6 +352,7 @@ func initDb() *gorp.DbMap {
 	err = dbmap.CreateTablesIfNotExists()
 	checkErr(err, "Create tables failed")
 
+	// Create default count for teams
 	count, err := dbmap.SelectInt("select count(*) from team")
 	checkErr(err, "Create tables failed")
 	if count == 0 {
@@ -365,6 +373,18 @@ func initDb() *gorp.DbMap {
 		}
 		err = dbmap.Insert(&team)
 		checkErr(err, "insert failed")
+	}
+
+	// Create default program date
+	count, err = dbmap.SelectInt("select count(*) from program")
+	checkErr(err, "Create tables failed")
+	if count == 0 {
+		program := Program{
+			Created: 	 time.Now().UnixNano(),
+			ProgramDate: "2016-01-01T01-01-00+09:00Z",
+		}
+		err = dbmap.Insert(&program)
+		checkErr(err, "Init insert failed for Program Date")
 	}
 
 	return dbmap
