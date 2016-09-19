@@ -55,6 +55,7 @@ type News struct {
 
 // News class
 type Program struct {
+	ID      int64 `db:"program_id"`
 	Created     int64
 	ProgramDate string
 }
@@ -154,7 +155,7 @@ func GetPerformers() []Performer {
 // GetProgram fetchs the current program date
 func GetProgram() Program {
 	var program Program
-	err := dbmap.SelectOne(&program, "select * from program")
+	err := dbmap.SelectOne(&program, "select * from program limit 1")
 	checkErr(err, "Program Date select failed")
 	return program
 }
@@ -261,7 +262,6 @@ func ScorePut(c *gin.Context) {
 
 // ProgramPost
 func ProgramPost(c *gin.Context) {
-	ClearProgram()
 	var program Program
 	err := c.Bind(&program)
 	if err != nil {
@@ -333,7 +333,7 @@ func initDb() *gorp.DbMap {
 	dbmap.AddTableWithName(Performer{}, "performer").SetKeys(true, "ID")
 	dbmap.AddTableWithName(Game{}, "game").SetKeys(true, "ID")
 	dbmap.AddTableWithName(News{}, "news").SetKeys(true, "ID")
-	dbmap.AddTableWithName(Program{}, "program")
+	dbmap.AddTableWithName(Program{}, "program").SetKeys(true, "ID")
 	err = dbmap.CreateTablesIfNotExists()
 	checkErr(err, "Create tables failed")
 
