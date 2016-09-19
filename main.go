@@ -162,7 +162,7 @@ func GetPerformers() []Performer {
 // GetProgram fetchs the current program date
 func GetProgram() Program {
 	var program Program
-	err := dbmap.SelectOne(&program, "select * from program limit 1")
+	err := dbmap.SelectOne(&program, "select * from program")
 	checkErr(err, "Program Date select failed")
 	return program
 }
