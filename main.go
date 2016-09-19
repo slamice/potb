@@ -62,7 +62,7 @@ type Program struct {
 
 // UpdateProgramDate replaces date for the program
 func UpdateProgramDate(programDate string) Program {
-	_, err := dbmap.Exec("update program set programddate = " + programDate)
+	_, err := dbmap.Exec(fmt.Sprintf("update program set programddate = '%s'", programDate))
 	checkErr(err, "Update failed for adding a new program date")
 
 	return GetProgram()
