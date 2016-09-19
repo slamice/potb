@@ -62,15 +62,10 @@ type Program struct {
 
 // UpdateProgramDate replaces date for the program
 func UpdateProgramDate(programDate string) Program {
-	program := Program{
-		Created:     time.Now().UnixNano(),
-		ProgramDate: programDate,
-	}
-
-	_, err := dbmap.Update(&program)
+	_, err := dbmap.Exec("update program set programddate = " + programDate)
 	checkErr(err, "Update failed for adding a new program date")
 
-	return program
+	return GetProgram()
 }
 
 // AddTeam creates a new team
@@ -366,7 +361,7 @@ func initDb() *gorp.DbMap {
 	if count == 0 {
 		program := Program{
 			Created: 	 time.Now().UnixNano(),
-			ProgramDate: "2016-01-01T01:01:00+09:00Z",
+			ProgramDate: "2016-01-01T01:01:00+09:00",
 		}
 		err = dbmap.Insert(&program)
 		checkErr(err, "Init insert failed for Program Date")
