@@ -59,21 +59,15 @@ type Program struct {
 	ProgramDate string
 }
 
-// AddDate creates a new date for teh program
-func AddProgramDate(programDate string) Program {
-	count, err := dbmap.SelectInt("select count(*) from program")
-	checkErr(err, "Select before adding a program failed.")
-	if count > 0 {
-		ClearProgram()
-	}
-
+// UpdateProgramDate replaces date for the program
+func UpdateProgramDate(programDate string) Program {
 	program := Program{
 		Created:     time.Now().UnixNano(),
 		ProgramDate: programDate,
 	}
 
-	err = dbmap.Insert(&program)
-	checkErr(err, "Insert failed for adding a new program date")
+	_, err := dbmap.Update(&program)
+	checkErr(err, "Update failed for adding a new program date")
 
 	return program
 }
@@ -96,15 +90,6 @@ func AddTeam(name string, color string) Team {
 func AddScore(name string) {
 	_, err := dbmap.Exec("update team set score = score + 1 where name = $1", name)
 	checkErr(err, "Update failed for updating a team score")
-}
-
-func AddProgram(program Program) {
-	programItem := Program{
-		Created:     time.Now().UnixNano(),
-		ProgramDate: program.ProgramDate,
-	}
-	err := dbmap.Insert(&programItem)
-	checkErr(err, "Creating new program date failed")
 }
 
 func AddNews(news []News) {
@@ -282,7 +267,7 @@ func ProgramPost(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	AddProgram(program)
+	UpdateProgramDate(program.ProgramDate)
 	content := gin.H{"result": "Success"}
 	c.JSON(200, content)
 }
