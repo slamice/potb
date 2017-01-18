@@ -348,7 +348,7 @@ func initDb() *gorp.DbMap {
 		team = Team{
 			Created: time.Now().UnixNano(),
 			Name:    "white",
-			Color:   "#E6E7E9",
+			Color:   "#000000",
 			Score:   0,
 		}
 		err = dbmap.Insert(&team)
