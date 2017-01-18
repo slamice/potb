@@ -13,25 +13,24 @@
     </div>
 
     <script type="text/javascript">
+    
 
-    function rgb2hex(rgb){
-     rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-     return (rgb && rgb.length === 4) ? "#" +
-      ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
-      ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
-      ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
-    }
 
     $.ajax({
         url: '/getteams',
         success: function(data) {
             var team1 = data[0];
             var team2 = data[1];
+            var team1_label = team1.Name + " " + team1.Score;
+            var team2_label = team2.Name + " " + team2.Score;
+
             $(function (data) {
                 $('#container').highcharts({
-                    tooltip: { enabled: false },
-                    credits: {
-                        enabled: false
+                  legend: {
+                      itemStyle: {
+                        fontSize:'2em',
+                        font: '2em Trebuchet MS, Verdana, sans-serif',
+                      }
                     },
                     chart: {
                         type: 'column'
@@ -40,42 +39,34 @@
                         text: 'Votes'
                     },
                     xAxis: {
-                      gridLineWidth: 0,
-                      minorGridLineWidth: 0,
-                      title: {text: 'Teams'}
+                      gridLineWidth: 1,
+                      labels: {
+                          style: {
+                              fontSize:'2em'
+                          }
+                      },
+                      categories:["======"]
                     },
                     yAxis: {
-                        gridLineWidth: 0,
-                        minorGridLineWidth: 0,
-                        categories: ['# of Votes'],
-                        stackLabels: {
-                            enabled: true,
-                            align: 'center'
-                        }
+                        text: 'Votes',
+                        gridLineWidth: 1,
                     },
-                    plotOptions: {
-                         series: {
-                             states: {
-                                 hover: {
-                                     enabled: false
-                                 }
-                             }
-                         }
-                     },
                     series: [{
-                        name: team1.Name,
+                        name: team1_label,
                         data: [team1.Score],
-                        color: rgb2hex(team1.Color)
+                        color: "#DF3535",
+                        fontSize: '2em'
                     }, {
-                        name: team2.Name,
+                        name: team2_label,
                         data: [team2.Score],
-                        color: rgb2hex(team2.Color)
+                        color: "#000000",
+                        fontSize: '2em'
                     }]
                 });
             });
-
         },
-        error: function() {alert("error occurred.")}
+        error: function() {alert("error occurred.")},
+
     });
 
     function clearScores(url) {
